@@ -25,7 +25,6 @@ app.get("/about", (req,res) => {
     res.json({"content":"some about text"});
 });
 
-
 app.listen(3000, () => {   
 });
 
