@@ -10,4 +10,15 @@ router.post('/blog/create',(req,res) => {
     });
 });
 
+router.patch('/blog/:id/update', (req,res) => {
+    var delta:{title?:string,content?:string} = {};
+    if(!!req.body.title)
+      delta.title = req.body.title;
+    if(!!req.body.content)
+        delta.content = req.body.content;
+    
+    db.updateBlog(req.params.id,delta,(blog) => {
+        res.send({success:(blog != null)});
+    })
+});
 export = router;

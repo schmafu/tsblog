@@ -57,3 +57,20 @@ export function insertBlog(title:string,content:string,callback:(blog:Blog)=> vo
         });
     });
 }
+
+export function updateBlog(id:string, delta:{title?:string, content?:string}, callback:(blog:Blog) => void) {
+    db.collection('blog',(err,collection) => {
+        if(err) {
+            console.log(err);
+            return;
+        }
+        collection.updateOne({_id:mongodb.ObjectID.createFromHexString(id)},
+            {$set:delta},(err2,result) => {
+            if(err2) {
+                console.log(err2)
+                callback(null);
+            }
+            callback(result);
+        });        
+    })
+}
