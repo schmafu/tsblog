@@ -5,3 +5,5 @@
 /// <reference path="serve-static/serve-static.d.ts" />
 /// <reference path="mongodb/mongodb.d.ts" />
 /// <reference path="body-parser/body-parser.d.ts" />
+/// <reference path="jsonwebtoken/jsonwebtoken.d.ts" />
+/// <reference path="bcrypt/bcrypt.d.ts" />

@@ -1,23 +1,24 @@
 import * as http from "http";
 import * as express from "express";
 import * as bodyParser from "body-parser";
-
+import * as bcrypt from "bcrypt";
+import * as crypto from "crypto";
+import * as jwt from "jsonwebtoken";
 import * as db from "./db";
-import * as adminroute from "./routes/admin";
+import * as adminRoute from "./routes/admin";
+import * as authRoute from "./routes/auth";
+import * as blogRoute from "./routes/blog";
+
 var app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use("/admin",adminroute)
-app.get("/blog",(req,res) => {
-    db.getBlogs((blogs) => {res.json(blogs);});
-});
+app.set("jwtSecret",crypto.randomBytes(30).toString("base64"));
 
-app.get("/blog/:id",(req,res) => {
-    console.log("im get:" + req.params.id);
-    db.getBlog(req.params.id,(blog) => {res.json(blog);});
-});
+app.use("/admin",adminRoute)
+app.use("/blog",blogRoute);
 
+app.use("/auth", authRoute);
 
 
 app.get("/about", (req,res) => {
@@ -25,9 +26,7 @@ app.get("/about", (req,res) => {
 });
 
 
-
-app.listen(3000, () => {
-    console.log("running...");
+app.listen(3000, () => {   
 });
 
 
