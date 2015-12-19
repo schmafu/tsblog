@@ -60,8 +60,7 @@ export function insertBlog(title:string,content:string,callback:(blog:Blog)=> vo
         collection.insertOne({title:title,content:content}, (err2,result) => {
            if(err2)
              callback(null);
-           callback(result); 
-            
+           callback(result);             
         });
     });
 }
