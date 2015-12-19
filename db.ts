@@ -128,8 +128,6 @@ export function getUser(username:string, callback:(user:User) => void) {
            callback(null);
            return;
         }
-        console.log("imgetuser");
-        console.log(result);
         callback(result);
     });                
   });
