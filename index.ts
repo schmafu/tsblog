@@ -1,5 +1,6 @@
 import * as http from "http";
 import * as express from "express";
+import * as cors from "cors";
 import * as bodyParser from "body-parser";
 import * as bcrypt from "bcrypt";
 import * as crypto from "crypto";
@@ -10,6 +11,7 @@ import * as authRoute from "./routes/auth";
 import * as blogRoute from "./routes/blog";
 
 var app = express();
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 

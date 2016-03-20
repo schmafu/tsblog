@@ -10,6 +10,7 @@ export interface Blog {
     _id: mongodb.ObjectID;
     title: string;
     content: string;
+    tags: [{name:string;}];
 }
 export interface User {
     _id: mongodb.ObjectID;
@@ -46,21 +47,21 @@ export function getBlog(id:string,callback:(blog:Blog) => void) {
                 console.log("cursor error: " + err2);
                 return;
             }
-            callback(result);               
+            callback(result);
         });
     });
 }
 
-export function insertBlog(title:string,content:string,callback:(blog:Blog)=> void) {
+export function insertBlog(title:string,content:string, tags: Array<string>, callback:(blog:Blog)=> void) {
     db.collection('blog',(err,collection) => {
         if(err) {
             console.log(err);
             return;
         }
-        collection.insertOne({title:title,content:content}, (err2,result) => {
+        collection.insertOne({title:title,content:content, tags: tags}, (err2,result) => {
            if(err2)
              callback(null);
-           callback(result);             
+           callback(result);
         });
     });
 }
@@ -78,7 +79,7 @@ export function updateBlog(id:string, delta:{title?:string, content?:string}, ca
                 callback(null);
             }
             callback(result);
-        });        
+        });
     })
 }
 
@@ -96,7 +97,7 @@ export function saveUser(username:string,password:string, callback:(hash:string)
                     }
                     callback(hash);
                 });
-                
+
             });
         });
     });
@@ -113,7 +114,7 @@ export function isAdmin(username:string, hash:string, callback:(admin:boolean) =
            return;
         }
         callback(result.admin);
-    });                
+    });
   });
 }
 export function getUser(username:string, callback:(user:User) => void) {
@@ -128,6 +129,6 @@ export function getUser(username:string, callback:(user:User) => void) {
            return;
         }
         callback(result);
-    });                
+    });
   });
 }
